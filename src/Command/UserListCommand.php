@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Command;
+//namespace Symfony\Bundle\FrameworkBundle\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Faker\Factory;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Bundle\FrameworkBundle\Console;
 
 class UserListCommand extends Command
 {
@@ -22,14 +24,14 @@ class UserListCommand extends Command
         $this
             ->setDescription('Add a short description for your command')
             ->addArgument('cases', InputArgument::REQUIRED, 'liczba wygenerowanych danych')
-//            ->addOption('randomize', '-r', InputOption::VALUE_NONE, 'Option description')
+            ->addOption('GenerateData', '-r', InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        $arg1 = $input->getArgument('cases');
         $this->faker = Factory::create();
 
         if ($arg1) {
@@ -44,13 +46,24 @@ class UserListCommand extends Command
                 ->setRows($this->arr);
             $table->render();
 
-            echo "Json:\n";
-            $json = json_encode($this->arr);
-            echo $json;
+            $_GET['data'] = json_encode($this->arr);
         }
 
+//        if ($arg1 && $input->getOption('GenerateData')) {
+//            for($i=0; $i<$arg1; $i++ ){
+//                $this->arr_view[] = [$this->faker->firstName, $this->faker->lastName, $this->faker->address];
+//            }
+//            return $this->arr_view;
+//        }
+
+//        $this->getJson();
         $io->success('Zakończono generowanie danych');
 
         return Command::SUCCESS;
+    }
+
+    public function getJson(){
+        dump( $this->json);die;
+        return $this->json;
     }
 }

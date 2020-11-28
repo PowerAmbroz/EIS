@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <table id="dataTable" class="table">
+        <thead>
+        <tr>
+            <th scope="col" >First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in tableData %}
+            <tr>
+                <td>{{ data[0] }}</td>
+                <td>{{ data[1] }}</td>
+                <td>{{ data[2] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+    <script>
+        $(document).ready(function()
+            {
+                $("table").tablesorter({
+                    sortList: [[0,0]],
+                    headers: {3:{sorter:false}}
+                });
+            }
+        );
+    </script>
+{% endblock %}
+
