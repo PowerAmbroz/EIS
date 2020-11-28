@@ -62,8 +62,4 @@ class UserListCommand extends Command
         return Command::SUCCESS;
     }
 
-    public function getJson(){
-        dump( $this->json);die;
-        return $this->json;
-    }
 }
