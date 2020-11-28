@@ -8,17 +8,19 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Faker\Factory;
 
 class UserListCommand extends Command
 {
     protected static $defaultName = 'user:list';
+    protected $faker;
 
     protected function configure()
     {
         $this
             ->setDescription('Add a short description for your command')
             ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('randomize', '-rand', InputOption::VALUE_NONE, 'Option description')
+//            ->addOption('randomize', '-r', InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
@@ -26,14 +28,17 @@ class UserListCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
+        $this->faker = Factory::create();
 
         if ($arg1) {
             $io->note(sprintf('You passed an argument: %s', $arg1));
+            for($i=0; $i<$arg1; $i++ ){
+                echo $this->faker->name;
+                echo $this->faker->email;
+                echo $this->faker->address;
+            }
         }
 
-        if ($input->getOption('randomize')) {
-            // ...
-        }
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
