@@ -47,16 +47,12 @@ class UserListCommand extends Command
             $table->render();
 
             $_GET['data'] = json_encode($this->arr);
+
+            if( php_sapi_name() == 'cli' ){
+                echo $_GET['data'];
+            }
         }
 
-//        if ($arg1 && $input->getOption('GenerateData')) {
-//            for($i=0; $i<$arg1; $i++ ){
-//                $this->arr_view[] = [$this->faker->firstName, $this->faker->lastName, $this->faker->address];
-//            }
-//            return $this->arr_view;
-//        }
-
-//        $this->getJson();
         $io->success('Zakończono generowanie danych');
 
         return Command::SUCCESS;
