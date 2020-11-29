@@ -28,7 +28,7 @@ class MainController extends AbstractController
     public function index(Request $request,KernelInterface $kernel, $cases = 10)
     {
 
-        $form = $this->createFormBuilder()
+        $form = $this->createFormBuilder() //tworzenie formularza do wpisywania ilości przypadków do generowania
             ->add('ilosc', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
@@ -47,13 +47,13 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
-            $cases = $form->getData()['ilosc'];
+            $cases = $form->getData()['ilosc']; //pobrani i przypisanie wartości
         }
 
-        $application = new Console\Application($kernel);
+        $application = new Console\Application($kernel); //wywołanie aplikacji konsolowej w celu wykorzystania jej do generacji przypadków
 
         $application->setAutoExit(false);
-//dump($cases);
+
         $input = new ArrayInput([
             'command' => 'user:list',
             'cases' => $cases,
@@ -66,7 +66,7 @@ class MainController extends AbstractController
 
 //        return new Response($content);
 
-        $tableData = json_decode($_GET['data']);
+        $tableData = json_decode($_GET['data']); //pobranie danych wygenerowanych z konsoli
 
         
         return $this->render('main/index.html.twig', [

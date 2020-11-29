@@ -36,19 +36,19 @@ class UserListCommand extends Command
 
         if ($arg1) {
 
-            for($i=0; $i<$arg1; $i++ ){
+            for($i=0; $i<$arg1; $i++ ){ //generowanie tablicy na podstawie ilości przypadków zadanej przez użytkownika
                 $this->arr[] = [$this->faker->firstName, $this->faker->lastName, $this->faker->address];
             }
 
-            $table = new Table($output);
+            $table = new Table($output); //tworzenie tabeli
             $table
                 ->setHeaders(['First Name', 'Last Name', 'Address'])
                 ->setRows($this->arr);
             $table->render();
 
-            $_GET['data'] = json_encode($this->arr);
+            $_GET['data'] = json_encode($this->arr); //tworzenie JSON'a i dodawania go do "szufladki"
 
-            if( php_sapi_name() == 'cli' ){
+            if( php_sapi_name() == 'cli' ){ //sprawdzenie czy zostałą użyta konsola, jeśli tak to wypisze JSON'a
                 echo $_GET['data'];
             }
         }
